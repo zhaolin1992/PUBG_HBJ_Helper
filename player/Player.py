@@ -6,7 +6,11 @@ class Player:
         self.offset_score = data_json.get('offset_score')
         self.score = 0
         self.current_kill = 0
-
+        
+        self.kills = 0
+        self.damage = 0
+        self.walkDistance = 0
+        self.headShots = 0
     def perprocess_kill(self, kill_num):
         if kill_num >= self.concede:
             return kill_num - self.concede

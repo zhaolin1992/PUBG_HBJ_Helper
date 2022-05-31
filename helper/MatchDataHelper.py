@@ -1,12 +1,14 @@
 import json
 import pdb
+import dateutil
 
 from soupsieve import match
 
 class MatchDataHelper:
     def __init__(self, root_player_id, match_data):
         self.root_player_id = root_player_id
-        self.match_data = match_data
+        self.match_data = match_data.get('included')
+        self.match_info = match_data.get('data')
     
     def is_chicken_dinner(self):
         roster = self.get_roster()
@@ -50,3 +52,13 @@ class MatchDataHelper:
         except:
             return None
         return squad_data
+
+    def get_match_time(self):
+        if self.match_info.get('attributes') is None:
+            return None
+        if self.match_info.get('attributes').get('createdAt') is None:
+            return None
+        try:
+            return int(dateutil.parser.parse(self.match_info.get('attributes').get('createdAt')).timestamp())
+        except:
+            return None
